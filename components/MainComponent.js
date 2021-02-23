@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import Directory from './DirectoryComponent';
+import CampsiteInfo from './CampsiteInfoComponent';
 import { CAMPSITES} from '../shared/campsites';
 
 class Main extends Component {
@@ -7,10 +9,33 @@ class Main extends Component {
         super(props);
         this.state = {
             campsites: CAMPSITES,
+            selectedCampsite: null,
         }
     }
+
+    logHi(){
+        console.log('hi');
+    }
+    
+    onCampsiteSelect(campsiteId){
+        console.log('pressed');
+        this.setState({selectedCampsite: campsiteId})
+    }
+
     render(){
-        return <Directory campsites={this.state.campsites} />
+        const { campsites, selectedCampsite } = this.state;
+        return (
+            <View style={{ flex : 1 }} >
+                <Directory 
+                    campsites={campsites} 
+                    onPress={(campsiteId) => this.onCampsiteSelect(campsiteId)}    
+                />
+                <CampsiteInfo 
+                    campsite={campsites.filter( campsite => campsite.id === selectedCampsite)[0]}
+                />
+            </View>
+            
+        )
     }
 }
 
