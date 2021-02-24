@@ -49,7 +49,7 @@ render(){
             <RenderItem 
                 item={partners.filter( partner => partner.featured)[0]}
             />
-            <Text>hi there</Text>
+            {/* <Text>hi there</Text> */}
         </ScrollView>
     )
 }
