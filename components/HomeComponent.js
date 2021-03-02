@@ -3,9 +3,22 @@ import { View, Text, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent';
 
-const RenderItem = ({ item }) => {
-    // console.log(item);
+
+function RenderItem(props) {
+    const {item} = props;
+
+    if (props.isLoading) {
+        return <Loading />;
+    }
+    if (props.errMess) {
+        return (
+            <View>
+                <Text>{props.errMess}</Text>
+            </View>
+        );
+    }
     if(item){
         return (
             <Card 
@@ -29,18 +42,25 @@ static navigationOptions = {
 
 render(){
     const { campsites, promotions, partners } = this.props;
+    console.log(campsites.campsites);
     return (
         <ScrollView>
             <RenderItem 
-                item={campsites.filter( campsite => campsite.featured)[0]}
+                item={campsites.campsites.filter( campsite => campsite.featured)[0]}
+                isLoading={campsites.isLoading}
+                errMess={campsites.errMess}
             />
             <RenderItem 
-                item={promotions.filter( promotion =>  promotion.featured)[0]}
+                item={promotions.promotions.filter( promotion =>  promotion.featured)[0]}
+                isLoading={promotions.isLoading}
+                errMess={promotions.errMess}
             />
             <RenderItem 
-                item={partners.filter( partner => partner.featured)[0]}
+                item={partners.partners.filter( partner => partner.featured)[0]}
+                isLoading={partners.isLoading}
+                    errMess={partners.errMess}
             />
-            {/* <Text>hi there</Text> */}
+            
         </ScrollView>
     )
 }
