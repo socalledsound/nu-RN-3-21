@@ -4,27 +4,33 @@ import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
-class  Directory extends Component {
 
+const mapStateToProps = state => {
+    return {
+        campsites: state.campsites
+    };
+};
 
+class Directory extends Component {
 
     static navigationOptions = {
-        title : 'Directory'
+        title: 'Directory'
     }
 
-    render(){
+    render() {
         const { navigate } = this.props.navigation;
-        const { campsites } = this.props.campsites;
         const renderDirectoryItem = ({item}) => {
             return (
-                <ListItem 
+                <Tile
                     title={item.name}
-                    subtitle={item.description}
-                    onPress={() => navigate('CampsiteInfo', { campsiteId: item.id})}
-                    leftAvatar={{ source: require('./images/react-lake.jpg') }}
+                    caption={item.description}
+                    featured
+                    onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+                    imageSrc={{uri: baseUrl + item.image}}
                 />
-            )
-        }
+            );
+        };
+
         if (this.props.campsites.isLoading) {
             return <Loading />;
         }
@@ -36,21 +42,13 @@ class  Directory extends Component {
             );
         }
         return (
-            <FlatList 
-                data={campsites}
+            <FlatList
+                data={this.props.campsites.campsites}
                 renderItem={renderDirectoryItem}
                 keyExtractor={item => item.id.toString()}
             />
-        )
+        );
     }
-
-
 }
-
-const mapStateToProps = state => {
-    return {
-        campsites: state.campsites
-    };
-};
 
 export default connect(mapStateToProps)(Directory);
