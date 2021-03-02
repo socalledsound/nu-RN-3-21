@@ -6,7 +6,7 @@ import { PROMOTIONS } from '../shared/promotions';
 import { PARTNERS } from '../shared/partners';
 
 const RenderItem = ({ item }) => {
-    console.log(item);
+    // console.log(item);
     if(item){
         return (
             <Card 
