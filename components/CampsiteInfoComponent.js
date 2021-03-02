@@ -11,7 +11,7 @@ const RenderCampsite = (props) => {
         return (
             <Card 
                 featuredTitle={campsite.name}
-                image={require('./images/react-lake.jpg')} 
+                image={{uri: baseUrl + campsite.image}}
             >
                 <Text style={{margin: 10}}>
                     {campsite.description}
@@ -62,8 +62,6 @@ class CampsiteInfo extends Component {
     constructor(props){
         super(props);
         this.state = {
-            campsites : CAMPSITES,
-            comments : COMMENTS,
             favorite : false,
         }
     }
@@ -77,14 +75,15 @@ class CampsiteInfo extends Component {
 
 
     render(){
+        const { campsites, comments } = this.props;
         const campsiteId = this.props.navigation.getParam('campsiteId');
-        const campsite = this.state.campsites.filter( campsite => campsite.id === campsiteId)[0];
-        const comments = this.state.comments.filter( comment => comment.campsiteId == campsiteId);
+        const campsite = campsites.filter( campsite => campsite.id === campsiteId)[0];
+        const filteredComments = comments.filter( comment => comment.campsiteId == campsiteId);
        
         return (
             <ScrollView>
                 <RenderCampsite campsite={campsite} favorite={this.state.favorite} markFavorite={() => this.markFavorite()}/>
-                <RenderComments comments={comments} />
+                <RenderComments comments={filteredComments} />
             </ScrollView>
         )
         
@@ -93,4 +92,13 @@ class CampsiteInfo extends Component {
     
 }
 
-export default CampsiteInfo
+
+
+const mapStateToProps = state => {
+    return {
+        campsites: state.campsites,
+        comments: state.comments
+    };
+};
+
+export default connect(mapStateToProps)(CampsiteInfo);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
-import { CAMPSITES } from '../shared/campsites';
-import { PROMOTIONS } from '../shared/promotions';
-import { PARTNERS } from '../shared/partners';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
 
 const RenderItem = ({ item }) => {
     // console.log(item);
@@ -11,7 +10,7 @@ const RenderItem = ({ item }) => {
         return (
             <Card 
                 featuredTitle={item.name}
-                image={require('./images/react-lake.jpg')}
+                image={{uri: baseUrl + item.image}}
             >
                 <Text style={{ margin: 10 }}>
                     {item.description}
@@ -24,20 +23,12 @@ const RenderItem = ({ item }) => {
 }
 class Home extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            campsites : CAMPSITES,
-            promotions : PROMOTIONS,
-            partners : PARTNERS
-        }
-    }
 static navigationOptions = {
     title : 'Home'
 }
 
 render(){
-    const { campsites, promotions, partners } = this.state;
+    const { campsites, promotions, partners } = this.props;
     return (
         <ScrollView>
             <RenderItem 
@@ -56,4 +47,12 @@ render(){
 
 }
 
-export default Home
+const mapStateToProps = state => {
+    return {
+        campsites: state.campsites,
+        promotions: state.promotions,
+        partners: state.partners
+    };
+};
+
+export default connect(mapStateToProps)(Home);
