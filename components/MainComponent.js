@@ -14,6 +14,30 @@ import { connect } from 'react-redux';
 import { fetchCampsites, fetchComments, fetchPromotions,
     fetchPartners } from '../redux/ActionCreators';
 
+    const ReservationNavigator = createStackNavigator(
+        {
+            Reservation: { screen: Reservation }
+        },
+        {
+            defaultNavigationOptions: ({navigation}) => ({
+                headerStyle: {
+                    backgroundColor: '#5637DD'
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    color: '#fff'
+                },
+                headerLeft: <Icon
+                    name='tree'
+                    type='font-awesome'
+                    iconStyle={styles.stackIcon}
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            })
+        }
+    );
+    
+
 
 const DirectoryNavigator = createStackNavigator(
     {
@@ -49,6 +73,7 @@ const HomeNavigator = createStackNavigator(
             }
         }
     }
+
 );
 
 
@@ -91,6 +116,20 @@ const MainNavigator = createDrawerNavigator(
     {
         Home: { screen: HomeNavigator },
         Directory: { screen: DirectoryNavigator },
+        Reservation: {
+            screen: ReservationNavigator,
+            navigationOptions: {
+                drawerLabel: 'Reserve Campsite',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='tree'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         About : { screen: AboutNavigator },
         Contact : { screen : ContactNavigator },
     },
