@@ -26,7 +26,7 @@ class Reservation extends Component {
     }
 
     handleReservation() {
-        console.log(JSON.stringify(this.state));
+        // console.log(JSON.stringify(this.state));
         this.toggleModal();
     }
 
