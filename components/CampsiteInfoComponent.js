@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment  } from '../redux/ActionCreators';
 
+
 const mapStateToProps = state => {
     return {
         campsites: state.campsites,
@@ -19,9 +20,10 @@ const mapDispatchToProps = {
     postComment : (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text),
 };
 
-function RenderCampsite(props) {
 
-    const {campsite} = props;
+function RenderCampsite() {
+
+    const { campsite }  = this.props;
 
     if (campsite) {
         return (
@@ -100,11 +102,13 @@ class CampsiteInfo extends Component {
             rating: 5,
             author: '',
             text: '',
-            showModal: false
+            showModal: false,
+            currentCampsite
         };
     }
 
     toggleModal() {
+        
         this.setState({showModal: !this.state.showModal});
     }
 

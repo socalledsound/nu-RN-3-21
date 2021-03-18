@@ -5,6 +5,15 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
 
+const mapStateToProps = state => {
+    return {
+        campsites: state.campsites,
+        promotions: state.promotions,
+        partners: state.partners
+    };
+    
+};
+
 
 function RenderItem(props) {
     const {item} = props;
@@ -58,7 +67,7 @@ render(){
             <RenderItem 
                 item={partners.partners.filter( partner => partner.featured)[0]}
                 isLoading={partners.isLoading}
-                    errMess={partners.errMess}
+                errMess={partners.errMess}
             />
             
         </ScrollView>
@@ -67,12 +76,6 @@ render(){
 
 }
 
-const mapStateToProps = state => {
-    return {
-        campsites: state.campsites,
-        promotions: state.promotions,
-        partners: state.partners
-    };
-};
+
 
 export default connect(mapStateToProps)(Home);
