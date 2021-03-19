@@ -332,9 +332,9 @@ class Main extends Component {
 
         this.showNetInfo();
 
-        this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
-            this.handleConnectivityChange(connectionInfo);
-        });
+        // this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
+        //     this.handleConnectivityChange(connectionInfo);
+        // });
     }
 
     async showNetInfo() {
